@@ -2,7 +2,7 @@ from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score
 
 # 1. 데이터
-X_data = [[0, 0], [1, 0], [0, 1], [1, 1]]
+x_data = [[0, 0], [1, 0], [0, 1], [1, 1]]
 y_data = [0, 0, 0, 1]
 
 # 2. 모델
