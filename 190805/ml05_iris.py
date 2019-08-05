@@ -4,7 +4,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 # 붓꽃 데이터 읽어 들이기
-iris_data = pd.read_csv("‪‪../../Data/iris.csv", encoding = 'utf-8')
+iris_data = pd.read_csv("‪‪../../Data/iris.csv", encoding = 'UTF-8')
 # print(iris_data)
 # print(iris_data.shape)
 # print(type(iris_data))
