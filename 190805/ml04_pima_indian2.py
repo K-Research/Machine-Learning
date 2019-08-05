@@ -1,8 +1,8 @@
-from sklearn.svm import LinearSVC, SVC
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 import numpy
 import tensorflow as tf
+from sklearn.model_selection import train_test_split
 
 # seed 값 생성
 seed = 0
@@ -15,15 +15,14 @@ dataset = numpy.loadtxt("‪‪../../Data/pima-indians-diabetes.csv", delimiter 
 X = dataset[ : , 0 : 8]
 Y = dataset[ : , 8]
 
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, random_state = 66, test_size = 0.2)
+
 # 모델의 설정
-# model = LinearSVC()
-# model = SVC()
-# model = KNeighborsClassifier(n_neighbors = 1)
-model = KNeighborsRegressor(n_neighbors = 1)
+model = SVC()
 
 # 모델 실행
-model.fit(X, Y)
+model.fit(X_train, Y_train)
 
 # 결과 출력
-y_predict = model.predict(X)
-print("\n Accuracy : %.4f" % accuracy_score(Y, y_predict))
+y_predict = model.predict(X_test)
+print("\n Accuracy : %.4f" % accuracy_score(Y_test, y_predict))
