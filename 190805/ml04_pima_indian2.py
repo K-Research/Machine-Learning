@@ -1,5 +1,5 @@
 from sklearn.svm import LinearSVC, SVC
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.metrics import accuracy_score
 import numpy
 import tensorflow as tf
@@ -18,7 +18,8 @@ Y = dataset[ : , 8]
 # 모델의 설정
 # model = LinearSVC()
 # model = SVC()
-model = KNeighborsClassifier(n_neighbors = 1)
+# model = KNeighborsClassifier(n_neighbors = 1)
+model = KNeighborsRegressor(n_neighbors = 1)
 
 # 모델 실행
 model.fit(X, Y)
