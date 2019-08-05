@@ -11,7 +11,7 @@ tf.set_random_seed(seed)
 # 데이터 로드
 dataset = numpy.loadtxt("‪‪../../Data/pima-indians-diabetes.csv", delimiter = ",")
 
-X = dataset[ : , 0:8]
+X = dataset[ : , 0 : 8]
 Y = dataset[ : , 8]
 
 # 모델의 설정
