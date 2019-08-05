@@ -23,3 +23,15 @@ x = iris_data.loc[ : , ["SepalLength", "SepalWidth", "PetalLength", "PetalWidth"
 # 학습 전용과 테스트 전용 분리하기
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, train_size = 0.8, shuffle = True)
 
+# print(y_test) # str형식으로 저장되어 있다.
+
+# print(x_train.shape)
+# print(type(x_train))
+
+# 학습히기
+clf = SVC()
+clf.fit(x_train, y_train)
+
+# 평가하기
+y_pred = clf.predict(x_test)
+print("정답률 : ", accuracy_score(y_test, y_pred)) # 0.933 ~ 1.0
