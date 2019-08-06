@@ -31,3 +31,13 @@ train_x, train_y = make_data(df[train_year])
 test_x, test_y = make_data(df[test_year])
 
 # 직선 회귀 분석하기
+lr = LinearRegression(normalize = True)
+lr.fit(train_x, train_y) # 학습하기
+pre_y = lr.predict(test_x) # 예측하기
+
+# 결과를 그래프로 그리기
+plt.figure(figsize = (10, 6), dpi = 100)
+plt.plot(test_y, c = 'r')
+plt.plot(pre_y, c = 'b')
+plt.savefig('tenki-kion-lr.png')
+plt.show()
