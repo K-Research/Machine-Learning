@@ -16,8 +16,10 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 # 학습하기
 model = RandomForestClassifier()
 model.fit(x_train, y_train)
+score = model.score(x_test, y_test)
 
 # 평가하기
 y_pred = model.predict(x_test)
 print(classification_report(y_test, y_pred))
 print("정답률 = ", accuracy_score(y_test, y_pred))
+print(score)
