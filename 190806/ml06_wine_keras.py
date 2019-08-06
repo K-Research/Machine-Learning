@@ -10,6 +10,7 @@ wine = pd.read_csv("‪../../Data/winequality-white.csv", sep = ";", encoding = 
 y = wine["quality"]
 
 from sklearn.preprocessing import OneHotEncoder
+
 enc = OneHotEncoder()
 y = enc.fit_transform(y.values.reshape(-1, 1)).toarray()
 
