@@ -41,3 +41,6 @@ plt.plot(test_y, c = 'r')
 plt.plot(pre_y, c = 'b')
 plt.savefig('tenki-kion-lr.png')
 plt.show()
+
+score = lr.score(test_x, test_y)
+print(score)
