@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 
@@ -32,9 +32,9 @@ def make_data(data):
 train_x, train_y = make_data(df[train_year])
 test_x, test_y = make_data(df[test_year])
 
-model = RandomForestClassifier(n_estimators = 100, max_features = "log2")
+model = RandomForestRegressor(n_estimators = 100, max_features = "log2")
 model.fit(train_x, train_y) # 학습하기
-pre_y = lr.predict(test_x) # 예측하기
+pre_y = model.predict(test_x) # 예측하기
 
 # 결과를 그래프로 그리기
 plt.figure(figsize = (10, 6), dpi = 100)
@@ -45,5 +45,5 @@ plt.show()
 
 score = model.score(test_x, test_y)
 print(score)
-print(classification_report(y_test, y_pred))
-print("정답률 = ", accuracy_score(y_test, y_pred))
+print(classification_report(test_y, pre_y))
+print("정답률 = ", accuracy_score(test_y, pre_y))
