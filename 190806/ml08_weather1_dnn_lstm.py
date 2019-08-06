@@ -54,7 +54,7 @@ model.add(Dense(1))
 model.compile(loss = 'mse', optimizer = 'adam', metrics = ['accuracy'])
 
 # 모델 실행
-model.fit(train_x, train_y, epochs = 10, batch_size = 1)
+model.fit(train_x, train_y, epochs = 100, batch_size = 1)
 
 # 평가하기
 pre_y = model.predict(test_x)
