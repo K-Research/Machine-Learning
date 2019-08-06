@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras.models import Sequential
 from keras.layers import *
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import r2_score
 
 # 기온 데이터 읽어 들이기
 df = pd.read_csv("‪../../Data/tem10y.csv", encoding = "UTF-8")
@@ -41,11 +43,8 @@ test_x = test_x.reshape((-1, 6, 1))
 
 # 학습하기
 model = Sequential()
-model.add(Dense(128, input_shape = (6, 1), activation = 'relu'))
-model.add(Dense(64))
-model.add(TimeDistributed(Dense(32)))
-model.add(LSTM(16))
-model.add(Dense(8))
+model.add(TimeDistributed(Dense(16, input_shape = (6, 1), activation = 'relu')))
+model.add(LSTM(8))
 model.add(Dense(4))
 model.add(Dense(2))
 model.add(Dense(1))
@@ -60,6 +59,16 @@ model.fit(train_x, train_y, epochs = 100, batch_size = 1)
 pre_y = model.predict(test_x)
 _, acc = model.evaluate(test_x, test_y, batch_size = 1)
 print("acc : ", acc)
+
+# RMSE 구하기
+def RMSE(y_test, y_predict):
+    return np.sqrt(mean_squared_error(y_test, y_predict))
+
+print("RMSE : ", RMSE(test_y, pre_y))
+
+# R2 구하기
+r2_y_predict = r2_score(test_y, pre_y)
+print("R2 : ", r2_y_predict)
 
 # 결과를 그래프로 그리기
 plt.figure(figsize = (10, 6), dpi = 100)
