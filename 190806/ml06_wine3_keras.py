@@ -28,7 +28,8 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 
 # 학습하기
 model = Sequential()
-model.add(Dense(81, input_dim = 11, activation = 'relu'))
+model.add(Dense(243, input_dim = 11, activation = 'relu'))
+model.add(Dense(81))
 model.add(Dense(27))
 model.add(Dense(9))
 model.add(Dense(3, activation = 'softmax'))
