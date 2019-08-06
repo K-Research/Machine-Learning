@@ -14,7 +14,7 @@ x = wine.drop("quality", axis = 1)
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 
 # 학습하기
-model = RandomForestClassifier()
+model = RandomForestClassifier(n_estimators = 100, max_features = "log2")
 model.fit(x_train, y_train)
 score = model.score(x_test, y_test)
 
