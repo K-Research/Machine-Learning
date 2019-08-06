@@ -12,3 +12,5 @@ y = boston.target
 # print(type(boston))
 
 from sklearn.linear_model import LinearRegression # Lasso, Ridge
+
+model= LinearRegression()
