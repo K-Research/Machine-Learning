@@ -35,7 +35,14 @@ model = KerasClassifier(build_fn = build_network, verbose = 1)
 
 hyperparameters = create_hyperparameters()
 
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler
+
+pipe = Pipeline([("scaler", MinMaxScaler()), ('svm', SVC())])
+clf = RandomizedSearchCV(pipe, parameters, cv = kfold_cv, n_iter = 20, n_jobs = 1, verbose = 1)
+
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
+
 search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, n_jobs = 1, cv = 3, verbose = 1)
 search.fit(x_train, y_train)
 

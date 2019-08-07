@@ -40,11 +40,13 @@ def create_hyperparameters():
     return{"batch_size" : batches, "optimizer" : optimizers, "keep_prob" : dropout}
 
 from keras.wrappers.scikit_learn import KerasClassifier
+
 model = KerasClassifier(build_fn = build_network, verbose = 1)
 
 hyperparameters = create_hyperparameters()
 
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
+
 search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, n_jobs = 1, cv = 3, verbose = 1)
 search.fit(x_train, y_train)
 
