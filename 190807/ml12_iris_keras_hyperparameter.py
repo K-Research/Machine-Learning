@@ -17,7 +17,6 @@ y = iris_data.loc[:, "y"]
 # ┗ y data들은 모두 문자열이므로 softmax로 분류가 불가능하므로 분류하기 위해서 문자열을 치환(oneHot Encoding)하여 표현해줘야한다
 x = iris_data.loc[:, ["a",'b','c','d']]
 
-
 # y2 = iris_data.iloc[:,4]
 # x2 = iris_data.iloc[:36]
 
@@ -32,8 +31,6 @@ y2 = enc.fit_transform(y.values.reshape(-1,1)).toarray()
 print(y[0], " -- one hot enocding --> ", y2[0])
 print(y[50], " -- one hot enocding --> ", y2[50])
 print(y[100], " -- one hot enocding --> ", y2[100])
-
-
 
 # 학습 전용과 테스트 전용 분리하기
 x_train, x_test, y_train, y_test = train_test_split(x,y2,test_size=0.2, train_size=0.8, shuffle=True)
