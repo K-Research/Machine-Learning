@@ -28,7 +28,7 @@ def create_hyperparameters():
     batches = [10, 20, 30, 40, 50]
     optimizers = ['rmsprop', 'adam', 'adadelta']
     dropout = numpy.linspace(0.1, 0.5, 5)
-    return{"batch_size" : batches, "optimizer" : optimizers, "keep_prob" : dropout}
+    return{"model__batch_size" : batches, "model__optimizer" : optimizers, "model__keep_prob" : dropout}
 
 from keras.wrappers.scikit_learn import KerasClassifier
 model = KerasClassifier(build_fn = build_network, verbose = 1)
@@ -38,12 +38,11 @@ hyperparameters = create_hyperparameters()
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 
-pipe = Pipeline([("scaler", MinMaxScaler()), ('svm', SVC())])
-clf = RandomizedSearchCV(pipe, parameters, cv = kfold_cv, n_iter = 20, n_jobs = 1, verbose = 1)
+pipe = Pipeline([("scaler", MinMaxScaler()), ('model', model)])
 
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 
-search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, n_jobs = 1, cv = 3, verbose = 1)
+search = RandomizedSearchCV(pipe, hyperparameters, n_iter = 10, n_jobs = 1, cv = 3, verbose = 1)
 search.fit(x_train, y_train)
 
 print(search.best_params_)

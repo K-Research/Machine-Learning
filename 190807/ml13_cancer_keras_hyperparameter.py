@@ -1,7 +1,7 @@
 import numpy
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split 
-from keras.models import Sequential, Model
+from keras.models import Model
 from keras.layers import Dense, Dropout, Input
 
 cancer = load_breast_cancer()
