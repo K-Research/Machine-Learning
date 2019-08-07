@@ -49,12 +49,3 @@ search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, n_jobs = 1, cv 
 search.fit(x_train, y_train)
 
 print(search.best_params_)
-
-# clf = Sequential()
-# clf.add(Dense(5, input_shape=(4, ), activation='relu'))
-# clf.add(Dense(8, activation='relu'))
-# clf.add(Dense(10, activation='relu'))
-# clf.add(Dense(3, activation='softmax'))
-
-# clf.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-# clf.fit(x_train, y_train, epochs=300)
