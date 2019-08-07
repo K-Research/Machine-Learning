@@ -19,9 +19,9 @@ warnings.filterwarnings('ignore')
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, train_size = 0.8, shuffle = True)
 
 # 그리드 서치에서 사용할 매개 변수 ---(*1)
-parameters = [{"n_estimators" : [1, 10, 100, 1000], "max_depth" : [1, 2, 3, 4, 5], "max_features" : ["auto"]}, 
-            {"n_estimators" : [1, 10, 100, 1000], "max_depth" : [1, 2, 3, 4, 5], "max_features" : ["sqrt"]}, 
-            {"n_estimators" : [1, 10, 100, 1000], "max_depth" : [1, 2, 3, 4, 5], "max_features" : ["log2"]}]
+parameters = [{"n_estimators" : [1, 10, 100, 1000], "max_depth" : [None, 1, 2, 3, 4, 5], "max_features" : ["auto"]}, 
+            {"n_estimators" : [1, 10, 100, 1000], "max_depth" : [None, 1, 2, 3, 4, 5], "max_features" : ["sqrt"]}, 
+            {"n_estimators" : [1, 10, 100, 1000], "max_depth" : [None, 1, 2, 3, 4, 5], "max_features" : ["log2"]}]
 
 # 그리드 서치 --- (*2)
 kfold_cv = KFold(n_splits = 5, shuffle = True)
