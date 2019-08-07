@@ -60,7 +60,7 @@ model = KerasClassifier(build_fn = build_network, verbose = 1) # verbose = 0
 hyperparameters = [create_hyperparameters()]
 
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
-# search = RandomizedSearchCV(model, hyperparameters, n_jobs = 1, cv = 3, verbose = 1) # 작업 10회 수행, 3겹 교차검증 사용
+# search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, n_jobs = 1, cv = 3, verbose = 1) # 작업 10회 수행, 3겹 교차검증 사용
 search = GridSearchCV(model, hyperparameters, n_jobs = 1, cv = 3, verbose = 1)
 #search.fit(data["X_train"], data["Y_train"])
 search.fit(X_train, Y_train)
