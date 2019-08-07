@@ -26,6 +26,7 @@ allAlgorithms = all_estimators(type_filter = "classifier")
 # print(type(allAlgorithms))
 
 for (name, algorithm) in allAlgorithms:
+
     # 각 알고리즘 객체 생성하기 --- (*2)
     clf = algorithm()
 
