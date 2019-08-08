@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import KFold, RandomizedSearchCV
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import accuracy_score, classification_report
 
 # 기온 데이터 읽어 들이기
 df = pd.read_csv("‪../../Data/tem10y.csv", encoding = "UTF-8")
