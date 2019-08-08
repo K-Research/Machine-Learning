@@ -25,7 +25,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 
 kfold_cv = KFold(n_splits = 5, shuffle = True)
 
-parameters = {"max_depth" : [None, 1, 2, 3, 4, 5], "max_features" : ["auto", "sqrt", "log2"], "random_state" : [0], "class_weight" : [None, "balanced"]}
+parameters = {"max_depth" : [None, 1, 2, 3, 4, 5], "max_features" : ["auto", "sqrt", "log2"], "random_state" : [0]}
 
 # 학습하기
 model = RandomizedSearchCV(GradientBoostingClassifier(), parameters, cv = kfold_cv)
@@ -33,6 +33,7 @@ model.fit(x_train, y_train)
 score = model.score(x_test, y_test)
 
 # 평가하기
+print("최적의 매개 변수 = ", model.best_estimator_)
 y_pred = model.predict(x_test)
 print(classification_report(y_test, y_pred))
 print("정답률 = ", accuracy_score(y_test, y_pred))

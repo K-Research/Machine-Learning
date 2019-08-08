@@ -33,6 +33,7 @@ model.fit(x_train, y_train)
 score = model.score(x_test, y_test)
 
 # 평가하기
+print("최적의 매개 변수 = ", model.best_estimator_)
 y_pred = model.predict(x_test)
 print(classification_report(y_test, y_pred))
 print("정답률 = ", accuracy_score(y_test, y_pred))
