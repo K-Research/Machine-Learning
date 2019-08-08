@@ -1,8 +1,7 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, KFold, GridSearchCV, RandomizedSearchCV
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import KFold, GridSearchCV, RandomizedSearchCV
 import warnings
 
 warnings.filterwarnings('ignore')
