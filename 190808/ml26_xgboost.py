@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import KFold, RandomizedSearchCV
 from xgboost import XGBRegressor
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import r2_score
 
 # 기온 데이터 읽어 들이기
 df = pd.read_csv("‪../../Data/tem10y.csv", encoding = "UTF-8")
@@ -44,11 +44,6 @@ model = RandomizedSearchCV(XGBRegressor(), parameters, cv = kfold_cv)
 model.fit(train_x, train_y) # 학습하기
 pre_y = model.predict(test_x) # 예측하기
 
-# 평가하기
-print("최적의 매개 변수 = ", model.best_estimator_)
-y_pred = model.predict(test_x)
-print(classification_report(test_y, pre_y))
-print("정답률 = ", accuracy_score(test_y, pre_y))
-
-# RMSE :  2.1875349013921324
-# R2 :  0.9185750253196282
+# R2 구하기
+r2_y_predict = r2_score(test_y, pre_y)
+print("R2 : ", r2_y_predict)
