@@ -63,5 +63,5 @@ search.fit(x_train, y_train)
 
 print(search.best_params_)
 
-score = search.score(X_test, Y_test)
+score = search.score(x_test, y_test)
 print("Score : ", score)
