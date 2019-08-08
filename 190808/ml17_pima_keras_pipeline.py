@@ -1,12 +1,11 @@
-from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Input
-import numpy
-import tensorflow as tf
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold, RandomizedSearchCV
+from keras.models import Sequential, Model
 from keras.wrappers.scikit_learn import KerasClassifier
+import numpy
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import KFold, RandomizedSearchCV, train_test_split
+import tensorflow as tf
 
 # seed 값 생성
 seed = 0
