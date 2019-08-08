@@ -25,7 +25,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 
 kfold_cv = KFold(n_splits = 5, shuffle = True)
 
-parameters = {"max_depth" : [1, 2, 3, 4, 5], "booster" : ["gbtree", "gblinear", "dart"], "max_delta_step" : [1, 2, 3, 4, 5], "base_score" : [0.1, 0.2 ,0.3, 0.4, 0.5], 
+parameters = {"max_depth" : [1, 2, 3, 4, 5], "learning_rate" : [0.1, 0.5, 1.0], "booster" : ["gbtree", "gblinear", "dart"], "max_delta_step" : [1, 2, 3, 4, 5], "base_score" : [0.1, 0.2 ,0.3, 0.4, 0.5], 
             "scale_pos_weight" : [0.1, 0.5, 1.0], "random_state" : [0], "class_weight" : [None, "balanced", "balanced_subsample"], 
             "importance_type" : ["gain", "weight", "cover", "total_gain", "total_cover"]}
 
