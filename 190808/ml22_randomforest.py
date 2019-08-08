@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 cancer = load_breast_cancer()
 X_train, X_test, Y_train, Y_test = train_test_split(cancer.data, cancer.target, stratify = cancer.target, random_state = 42)
 
-tree = RandomForestClassifier(random_state = 0)
+tree = RandomForestClassifier(max_features = "sqrt", random_state = 0, class_weight = "balanced")
 tree.fit(X_train, Y_train)
 print("훈련 세트 정확도 : {:.3f}".format(tree.score(X_train, Y_train)))
 print("테스트 세트 정확도 : {:.3f}".format(tree.score(X_test, Y_test)))
@@ -16,7 +16,7 @@ print("테스트 세트 정확도 : {:.3f}".format(tree.score(X_test, Y_test)))
 
 # tree = RandomForestClassifier(max_depth = 4, random_state = 0)
 # tree.fit(X_train, Y_train)
-# print("훈련 세트 정확도 : {:.3f}".format(tree.score(X_train, Y_train)))
+# print("훈련 세트 정확도 : {:.3f}".format(tree.score(X_train, Y_train)))   
 # print("테스트 세트 정확도 : {:.3f}".format(tree.score(X_test, Y_test)))
 
 print("특성 중요도 : \n", tree.feature_importances_)
