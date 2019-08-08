@@ -41,12 +41,9 @@ model = RandomizedSearchCV(RandomForestRegressor(), parameters, cv = kfold_cv)
 model.fit(train_x, train_y) # 학습하기
 pre_y = model.predict(test_x) # 예측하기
 
-# RMSE 구하기
-def RMSE(y_test, y_predict):
-    return np.sqrt(mean_squared_error(y_test, y_predict))
-
-print("RMSE : ", RMSE(test_y, pre_y))
-
-# R2 구하기
-r2_y_predict = r2_score(test_y, pre_y)
-print("R2 : ", r2_y_predict)
+# 평가하기
+print("최적의 매개 변수 = ", model.best_estimator_)
+y_pred = model.predict(x_test)
+print(classification_report(y_test, y_pred))
+print("정답률 = ", accuracy_score(y_test, y_pred))
+print(score)
