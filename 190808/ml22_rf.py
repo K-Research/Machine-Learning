@@ -1,19 +1,18 @@
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 
 cancer = load_breast_cancer()
 X_train, X_test, Y_train, Y_test = train_test_split(cancer.data, cancer.target, stratify = cancer.target, random_state = 42)
 
-tree = DecisionTreeClassifier(random_state = 0)
+tree = RandomForestClassifier(random_state = 0)
 tree.fit(X_train, Y_train)
 print("훈련 세트 정확도 : {:.3f}".format(tree.score(X_train, Y_train)))
 print("테스트 세트 정확도 : {:.3f}".format(tree.score(X_test, Y_test)))
 
-# tree = DecisionTreeClassifier(max_depth = 4, random_state = 0)
-# tree.fit(X_train, Y_train)
-# print("훈련 세트 정확도 : {:.3f}".format(tree.score(X_train, Y_train)))
-# print("테스트 세트 정확도 : {:.3f}".format(tree.score(X_test, Y_test)))
+# n_estimators : 클수록 좋다. 단점 : 메모리 많이 차지, 기본값 : 100
+# n_jobs = -1 : cpu: 병렬처리
+# max_features : 기본값 써라
 
 print("특성 중요도 : \n", tree.feature_importances_)
 
