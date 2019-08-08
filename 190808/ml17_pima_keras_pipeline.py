@@ -31,16 +31,16 @@ def build_network(keep_prob = 0.5, optimizer = 'adam'):
     x5 = Dense(128, activation = 'relu', name = 'hidden3')(x4)
     x6 = Dropout(keep_prob)(x5)
     x7 = Dense(64, activation = 'relu', name = 'hidden5')(x6)
-    x8 = Dropout(keep_prob)(x7)
-    x9 = Dense(32, activation = 'relu', name = 'hidden6')(x8)
-    x10 = Dropout(keep_prob)(x9)
-    x11 = Dense(16, activation = 'relu', name = 'hidden7')(x10)
-    x12 = Dropout(keep_prob)(x11)
-    x13 = Dense(8, activation = 'relu', name = 'hidden8')(x12)
-    x14 = Dropout(keep_prob)(x13)
-    x15 = Dense(4, activation = 'relu', name = 'hidden9')(x14)
-    x16 = Dropout(keep_prob)(x15)
-    x17 = Dense(2, activation = 'relu', name = 'hidden10')(x16)
+    # x8 = Dropout(keep_prob)(x7)
+    x9 = Dense(32, activation = 'relu', name = 'hidden6')(x7)
+    # x10 = Dropout(keep_prob)(x9)
+    x11 = Dense(16, activation = 'relu', name = 'hidden7')(x9)
+    # x12 = Dropout(keep_prob)(x11)
+    x13 = Dense(8, activation = 'relu', name = 'hidden8')(x11)
+    # x14 = Dropout(keep_prob)(x13)
+    x15 = Dense(4, activation = 'relu', name = 'hidden9')(x13)
+    # x16 = Dropout(keep_prob)(x15)
+    x17 = Dense(2, activation = 'relu', name = 'hidden10')(x15)
     prediction = Dense(1, activation = 'sigmoid', name = 'output')(x17)
     model = Model(inputs = inputs, outputs = prediction)
     model.compile(optimizer = optimizer, loss = 'binary_crossentropy', metrics = ['accuracy'])
@@ -50,7 +50,7 @@ def create_hyperparameters():
     batches = [1, 10, 20, 30, 40, 50]
     optimizers = ['rmsprop', 'adam', 'adadelta']
     dropout = numpy.linspace(0.1, 0.5, 5)
-    epochs = [10, 20, 40, 60, 80, 100]
+    epochs = [10, 50, 100, 300, 500]
     return{"model__batch_size" : batches, "model__optimizer" : optimizers, "model__keep_prob" : dropout, "model__epochs" : epochs}
 
 model = KerasClassifier(build_fn = build_network, verbose = 1)
