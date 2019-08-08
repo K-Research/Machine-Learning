@@ -49,3 +49,6 @@ search = RandomizedSearchCV(pipe, hyperparameters, n_iter = 10, n_jobs = 1, cv =
 search.fit(x_train, y_train)
 
 print(search.best_params_)
+
+score = search.score(X_test, Y_test)
+print("Score : ", score)
