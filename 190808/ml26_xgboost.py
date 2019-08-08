@@ -52,3 +52,6 @@ print("RMSE : ", RMSE(test_y, pre_y))
 # R2 구하기
 r2_y_predict = r2_score(test_y, pre_y)
 print("R2 : ", r2_y_predict)
+
+# RMSE :  2.1875349013921324
+# R2 :  0.9185750253196282
