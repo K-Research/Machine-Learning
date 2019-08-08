@@ -49,7 +49,6 @@ print("최적의 매개 변수 = ", model.best_estimator_)
 y_pred = model.predict(test_x)
 print(classification_report(test_y, pre_y))
 print("정답률 = ", accuracy_score(test_y, pre_y))
-print(score)
 
 # RMSE :  2.1875349013921324
 # R2 :  0.9185750253196282
