@@ -14,12 +14,12 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, rando
 def build_network(keep_prob = 0.5, optimizer = 'adam'):
     inputs = Input(shape = (30, ), name = 'input')
     x = Dense(512, activation = 'relu', name = 'hidden1')(inputs)
-    x = Dropout(keep_prob)(x)
-    x1 = Dense(256, activation = 'relu', name = 'hidden2')(x)
-    x1 = Dropout(keep_prob)(x1)
-    x2 = Dense(128, activation = 'relu', name = 'hidden3')(x1)
-    x2 = Dropout(keep_prob)(x2)
-    prediction = Dense(1, activation = 'sigmoid', name = 'output')(x2)
+    x1 = Dropout(keep_prob)(x)
+    x2 = Dense(256, activation = 'relu', name = 'hidden2')(x2)
+    x3 = Dropout(keep_prob)(x2)
+    x4 = Dense(128, activation = 'relu', name = 'hidden3')(x3)
+    x5 = Dropout(keep_prob)(x4)
+    prediction = Dense(1, activation = 'sigmoid', name = 'output')(x5)
     model = Model(inputs = inputs, outputs = prediction)
     model.compile(optimizer = optimizer, loss = 'binary_crossentropy', metrics = ['accuracy'])
     return model
