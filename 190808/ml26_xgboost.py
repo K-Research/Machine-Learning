@@ -47,3 +47,5 @@ pre_y = model.predict(test_x) # 예측하기
 # R2 구하기
 r2_y_predict = r2_score(test_y, pre_y)
 print("R2 : ", r2_y_predict)
+
+# R2 :  0.9190989470822266
