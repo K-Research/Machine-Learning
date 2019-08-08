@@ -30,16 +30,28 @@ def build_network(keep_prob = 0.5, optimizer = 'adam'):
     x4 = Dropout(keep_prob)(x3)
     x5 = Dense(128, activation = 'relu', name = 'hidden3')(x4)
     x6 = Dropout(keep_prob)(x5)
-    prediction = Dense(1, activation = 'sigmoid', name = 'output')(x6)
+    x7 = Dense(64, activation = 'relu', name = 'hidden5')(x6)
+    x8 = Dropout(keep_prob)(x7)
+    x9 = Dense(32, activation = 'relu', name = 'hidden6')(x8)
+    x10 = Dropout(keep_prob)(x9)
+    x11 = Dense(16, activation = 'relu', name = 'hidden7')(x10)
+    x12 = Dropout(keep_prob)(x11)
+    x13 = Dense(8, activation = 'relu', name = 'hidden8')(x12)
+    x14 = Dropout(keep_prob)(x13)
+    x15 = Dense(4, activation = 'relu', name = 'hidden9')(x14)
+    x16 = Dropout(keep_prob)(x15)
+    x17 = Dense(2, activation = 'relu', name = 'hidden10')(x16)
+    prediction = Dense(1, activation = 'sigmoid', name = 'output')(x17)
     model = Model(inputs = inputs, outputs = prediction)
     model.compile(optimizer = optimizer, loss = 'binary_crossentropy', metrics = ['accuracy'])
     return model
 
 def create_hyperparameters():
-    batches = [10, 20, 30, 40, 50]
+    batches = [1, 10, 20, 30, 40, 50]
     optimizers = ['rmsprop', 'adam', 'adadelta']
     dropout = numpy.linspace(0.1, 0.5, 5)
-    return{"model__batch_size" : batches, "model__optimizer" : optimizers, "model__keep_prob" : dropout}
+    epochs = [10, 20, 40, 60, 80, 100]
+    return{"model__batch_size" : batches, "model__optimizer" : optimizers, "model__keep_prob" : dropout, "model__epochs" : epochs}
 
 model = KerasClassifier(build_fn = build_network, verbose = 1)
 
@@ -47,7 +59,7 @@ hyperparameters = create_hyperparameters()
 
 pipe = Pipeline([("scaler", MinMaxScaler()), ('model', model)])
 
-search = RandomizedSearchCV(pipe, hyperparameters, n_iter = 10, n_jobs = 1, cv = 3, verbose = 1)
+search = RandomizedSearchCV(pipe, hyperparameters, n_iter = 10, n_jobs = -1, cv = 3, verbose = 1)
 search.fit(X_train, Y_train)
 
 print(search.best_params_)
