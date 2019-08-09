@@ -12,6 +12,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 
 # CIFAR_10은 3채널로 구성된 32x32 이미지 60000장을 갖는다.
 IMG_CHANNELS = 3
@@ -94,6 +95,9 @@ def build_network(keep_prob = 0.5, optimizer = 'adam'):
     prediction = Activation('softmax', name = 'output')(x11)
     model = Model(inputs = inputs, outputs = prediction)
     model.compile(optimizer = optimizer, loss = 'categorical_crossentropy', metrics = ['accuracy'])
+    data_generator = ImageDataGenerator(featurewise_center = True, featurewise_std_normalization = True, rotation_range = 180, width_shift_range = 1.0, height_shift_range = 1.0, 
+                                    horizontal_flip = True, vertical_flip = True)
+    model.fit_generator(data_generator.flow(X_train, Y_train, batch_size = 10), steps_per_epoch = 5000, epochs = 200, validation_data = (X_test, Y_test), verbose = 1)
     return model
 
 def create_hyperparameters():
@@ -101,29 +105,32 @@ def create_hyperparameters():
     optimizers = ['rmsprop', 'adam', 'adadelta']
     dropout = np.linspace(0.1, 0.5, 5)
     epochs = [10, 50, 100, 300, 500]
-    return{"model__batch_size" : batches, "model__optimizer" : optimizers, "model__keep_prob" : dropout, "model__epochs" : epochs}
+    return{"batch_size" : batches, "optimizer" : optimizers, "keep_prob" : dropout, "epochs" : epochs}
 
-# model = KerasClassifier(build_fn = build_network, verbose = 1)
-model = build_network()
+model = KerasClassifier(build_fn = build_network, verbose = 1)
+# model = build_network()
 
-data_generator = ImageDataGenerator(featurewise_center = True, featurewise_std_normalization = True, rotation_range = 180, width_shift_range = 1.0, height_shift_range = 1.0, 
-                                    horizontal_flip = True, vertical_flip = True)
-model.fit_generator(data_generator.flow(X_train, Y_train, batch_size = 10), steps_per_epoch = 6000, epochs = 200, validation_data = (X_test, Y_test), verbose = 1)
-
-# print(X_train.shape)
+print(X_train.shape)
 # print(Y_train.shape)
 
 hyperparameters = create_hyperparameters()
 
-pipe = Pipeline([("scaler", MinMaxScaler()), ('model', model)])
+# pipe = Pipeline([("scaler", MinMaxScaler()), ('model', model)])
+# search = RandomizedSearchCV(pipe, hyperparameters, n_iter = 10, n_jobs = -1, cv = 3, verbose = 1)
 
-search = RandomizedSearchCV(pipe, hyperparameters, n_iter = 10, n_jobs = -1, cv = 3, verbose = 1)
+# model = Model(search)
+# model.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
+# model.fit_generator(data_generator.flow(X_train, Y_train, batch_size = 10), steps_per_epoch = 5000, epochs = 200, validation_data = (X_test, Y_test), verbose = 1)
 
-search.fit(x_train, y_train)
+search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, n_jobs = -1, cv = 3, verbose = 1)
+
+# model.fit_generator(data_generator.flow(X_train, Y_train, batch_size = 10), steps_per_epoch = 5000, epochs = 200, validation_data = (X_test, Y_test), verbose = 1)
+
+search.fit(X_train, Y_train)
 
 print(search.best_params_)
 
-score = search.score(x_test, y_test)
+score = search.score(X_test, Y_test)
 print("Score : ", score)
 
 '''
