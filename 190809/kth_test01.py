@@ -87,9 +87,9 @@ def build_network(keep_prob = 0.5, optimizer = 'adam'):
     x3 = MaxPooling2D(pool_size = (2, 2))(x2)
     x4 = Dropout(keep_prob)(x3)
     x5 = Flatten()(x4)
-    x6 = Dense(16, name = 'hidden2')(x5)
+    x6 = Dense(512, name = 'hidden2')(x5)
     x7 = Activation('relu')(x6)
-    x8 = Dense(8, name = 'hidden3')(x7)
+    x8 = Dense(512, name = 'hidden3')(x7)
     x9 = Activation('relu')(x8)
     x10 = Dropout(0.5)(x9)
     x11 = Dense(NB_CLASSES, name = 'hidden4')(x10)
@@ -99,12 +99,10 @@ def build_network(keep_prob = 0.5, optimizer = 'adam'):
     return model
 
 def create_hyperparameters():
-    # batches = [10, 20, 30, 40, 50]
     batches = [1, 10, 20, 30, 40, 50]
     optimizers = ['rmsprop', 'adam', 'adadelta']
     dropout = np.linspace(0.1, 0.5, 5)
-    # epochs = [10, 50, 100, 300, 500]
-    epochs = [10, 50, 100]
+    epochs = [10, 50, 100, 300, 500]
     return{"batch_size" : batches, "optimizer" : optimizers, "keep_prob" : dropout, "epochs" : epochs}
 
 data_generator = ImageDataGenerator(featurewise_center = True, featurewise_std_normalization = True, rotation_range = 180, width_shift_range = 1.0, height_shift_range = 1.0, 
