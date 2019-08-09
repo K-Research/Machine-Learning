@@ -1,18 +1,19 @@
 from keras.datasets import cifar10
-from keras.utils import np_utils
-from keras.models import Sequential, Model
 from keras.layers import Input
-from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Conv2D, MaxPooling2D
+from keras.layers.core import Dense, Dropout, Activation, Flatten
+from keras.models import Sequential, Model
 from keras.optimizers import SGD, Adam, RMSprop
-import matplotlib.pyplot as plt
-from keras.wrappers.scikit_learn import KerasClassifier
+from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from keras.utils import np_utils
+from keras.wrappers.scikit_learn import KerasClassifier
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 # CIFAR_10은 3채널로 구성된 32x32 이미지 60000장을 갖는다.
 IMG_CHANNELS = 3
@@ -86,46 +87,58 @@ def build_network(keep_prob = 0.5, optimizer = 'adam'):
     x3 = MaxPooling2D(pool_size = (2, 2))(x2)
     x4 = Dropout(keep_prob)(x3)
     x5 = Flatten()(x4)
-    x6 = Dense(512, name = 'hidden2')(x5)
+    x6 = Dense(16, name = 'hidden2')(x5)
     x7 = Activation('relu')(x6)
-    x8 = Dense(512, name = 'hidden3')(x7)
+    x8 = Dense(8, name = 'hidden3')(x7)
     x9 = Activation('relu')(x8)
     x10 = Dropout(0.5)(x9)
     x11 = Dense(NB_CLASSES, name = 'hidden4')(x10)
     prediction = Activation('softmax', name = 'output')(x11)
     model = Model(inputs = inputs, outputs = prediction)
     model.compile(optimizer = optimizer, loss = 'categorical_crossentropy', metrics = ['accuracy'])
-    data_generator = ImageDataGenerator(featurewise_center = True, featurewise_std_normalization = True, rotation_range = 180, width_shift_range = 1.0, height_shift_range = 1.0, 
-                                    horizontal_flip = True, vertical_flip = True)
-    model.fit_generator(data_generator.flow(X_train, Y_train, batch_size = 10), steps_per_epoch = 5000, epochs = 200, validation_data = (X_test, Y_test), verbose = 1)
     return model
 
 def create_hyperparameters():
-    batches = [10, 20, 30, 40, 50]
+    # batches = [10, 20, 30, 40, 50]
+    batches = [1, 10, 20, 30, 40, 50]
     optimizers = ['rmsprop', 'adam', 'adadelta']
     dropout = np.linspace(0.1, 0.5, 5)
-    epochs = [10, 50, 100, 300, 500]
+    # epochs = [10, 50, 100, 300, 500]
+    epochs = [10, 50, 100]
     return{"batch_size" : batches, "optimizer" : optimizers, "keep_prob" : dropout, "epochs" : epochs}
 
-model = KerasClassifier(build_fn = build_network, verbose = 1)
-# model = build_network()
+data_generator = ImageDataGenerator(featurewise_center = True, featurewise_std_normalization = True, rotation_range = 180, width_shift_range = 1.0, height_shift_range = 1.0, 
+                                    horizontal_flip = True, vertical_flip = True, fill_mode = 'nearest')
 
-print(X_train.shape)
-# print(Y_train.shape)
+for i in range(len(X_train)): #len(x_train)만큼 반복하면서 2배의 사진데이터 생성
+    img = X_train[i, :, :, :]
+    # Y_train = np.vstack((Y_train, Y_train[i]))
+    img = img.reshape((1,)+ img.shape)  
+    # plt.imshow(image.array_to_img(img[0]))
+    # plt.show()
+    i = 0
+
+    for batch in data_generator.flow(img, batch_size= 1):
+      i += 1
+    #   plt.imshow(image.array_to_img(batch[0]))
+    #   plt.show()
+      X_train = np.vstack((X_train, batch))
+      Y_train = np.vstack((Y_train, Y_train[i]))
+    #   img = img.reshape((1,)+ img.shape)
+          
+      if i == 3:
+        break
+
+print("X_train shape: ", X_train.shape)
+print("X_test shape: ", X_test.shape)
+print("Y_train shape: ", Y_train.shape)
+print("Y_test shape: ", Y_test.shape)
+
+model = KerasClassifier(build_fn = build_network, verbose = 1)
 
 hyperparameters = create_hyperparameters()
 
-# pipe = Pipeline([("scaler", MinMaxScaler()), ('model', model)])
-# search = RandomizedSearchCV(pipe, hyperparameters, n_iter = 10, n_jobs = -1, cv = 3, verbose = 1)
-
-# model = Model(search)
-# model.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
-# model.fit_generator(data_generator.flow(X_train, Y_train, batch_size = 10), steps_per_epoch = 5000, epochs = 200, validation_data = (X_test, Y_test), verbose = 1)
-
 search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, n_jobs = -1, cv = 3, verbose = 1)
-
-# model.fit_generator(data_generator.flow(X_train, Y_train, batch_size = 10), steps_per_epoch = 5000, epochs = 200, validation_data = (X_test, Y_test), verbose = 1)
-
 search.fit(X_train, Y_train)
 
 print(search.best_params_)
@@ -134,22 +147,6 @@ score = search.score(X_test, Y_test)
 print("Score : ", score)
 
 '''
-# 신경망 정의
-model = Sequential()
-model.add(Conv2D(32, (3, 3), padding = 'same', input_shape = (IMG_ROWS, IMG_COLS, IMG_CHANNELS)))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size = (2, 2)))
-model.add(Dropout(0.25))
-
-model.add(Flatten())
-model.add(Dense(512))
-model.add(Activation('relu'))
-model.add(Dropout(0.5))
-model.add(Dense(NB_CLASSES))
-model.add(Activation('softmax'))
-
-# model.summary()
-
 # 학습
 import keras
 
