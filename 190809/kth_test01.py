@@ -1,3 +1,4 @@
+import h5py
 from keras.datasets import cifar10
 from keras.layers import Input
 from keras.layers.convolutional import Conv2D, MaxPooling2D
@@ -14,6 +15,18 @@ import pandas as pd
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+import warnings
+
+from keras.backend import tensorflow_backend
+import tensorflow
+# config = tensorflow.ConfigProto()
+# config.gpu_options.allow_growth = True
+# tensorflow_backend.set_session(tensorflow.Session(config = config))
+
+# warnings.filterwarnings('ignore')
+# warnings.simplefilter(action = 'ignore', category = FutureWarning)
+warnings.simplefilter(action = 'ignore', category = UserWarning)
+# warnings.resetwarnings()
 
 # CIFAR_10은 3채널로 구성된 32x32 이미지 60000장을 갖는다.
 IMG_CHANNELS = 3
@@ -108,35 +121,33 @@ def create_hyperparameters():
 data_generator = ImageDataGenerator(featurewise_center = True, featurewise_std_normalization = True, rotation_range = 180, width_shift_range = 1.0, height_shift_range = 1.0, 
                                     horizontal_flip = True, vertical_flip = True, fill_mode = 'nearest')
 
-for i in range(len(X_train)): #len(x_train)만큼 반복하면서 2배의 사진데이터 생성
+for i in range(len(X_train)):
     img = X_train[i, :, :, :]
-    # Y_train = np.vstack((Y_train, Y_train[i]))
     img = img.reshape((1,)+ img.shape)  
-    # plt.imshow(image.array_to_img(img[0]))
-    # plt.show()
     i = 0
 
     for batch in data_generator.flow(img, batch_size= 1):
       i += 1
-    #   plt.imshow(image.array_to_img(batch[0]))
-    #   plt.show()
       X_train = np.vstack((X_train, batch))
       Y_train = np.vstack((Y_train, Y_train[i]))
-    #   img = img.reshape((1,)+ img.shape)
+#       print(X_train.shape)
+#       print(Y_train.shape)
           
-      if i == 3:
+    #  if i == 199:
+      if i == 32:
         break
 
-print("X_train shape: ", X_train.shape)
-print("X_test shape: ", X_test.shape)
-print("Y_train shape: ", Y_train.shape)
-print("Y_test shape: ", Y_test.shape)
+# print("X_train shape: ", X_train.shape)
+# print("X_test shape: ", X_test.shape)
+# print("Y_train shape: ", Y_train.shape)
+# print("Y_test shape: ", Y_test.shape)
 
 model = KerasClassifier(build_fn = build_network, verbose = 1)
 
 hyperparameters = create_hyperparameters()
 
-search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, n_jobs = -1, cv = 3, verbose = 1)
+# search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, n_jobs = -1, cv = 3, verbose = 1)
+search = RandomizedSearchCV(model, hyperparameters, n_iter = 10, cv = 3, verbose = 1)
 search.fit(X_train, Y_train)
 
 print(search.best_params_)
@@ -187,3 +198,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc = 'upper left')
 plt.show()
 '''
+
+# {'optimizer': 'adam', 'keep_prob': 0.1, 'epochs': 100, 'batch_size': 30}
+# 300/300 [==============================] - 1s 3ms/step
+# Score :  0.08000000230967999
