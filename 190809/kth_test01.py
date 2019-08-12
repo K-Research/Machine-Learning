@@ -3,9 +3,9 @@ from keras.backend import tensorflow_backend
 from keras.datasets import cifar10
 from keras.layers import Input
 from keras.layers.convolutional import Conv2D, MaxPooling2D
-from keras.layers.core import Dense, Dropout, Activation, Flatten
-from keras.models import Sequential, Model
-from keras.optimizers import SGD, Adam, RMSprop
+from keras.layers.core import Activation, Dense, Dropout, Flatten
+from keras.models import Model, Sequential
+from keras.optimizers import Adam, RMSprop, SGD
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import np_utils

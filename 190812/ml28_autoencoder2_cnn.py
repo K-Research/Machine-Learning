@@ -12,9 +12,6 @@ x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1 : ])))
 x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
 x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
 
-print(x_train.shape)
-print(x_test.shape)
-
 ################### 모델 구성 ###################
 from keras.layers import Dense, Conv2D, Input
 from keras.models import Model
@@ -46,10 +43,6 @@ decoder_layer = autoencoder.layers[-1]
 # 디코더 모델 생성
 decoder = Model(encoded_input, decoder_layer(encoded_input))
 
-autoencoder.summary()
-encoder.summary()
-decoder.summary()
-
 autoencoder.compile(optimizer = 'adadelta', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
 history = autoencoder.fit(x_train, x_train, epochs = 50, batch_size = 256, shuffle = True, validation_data = (x_test, x_test))
@@ -58,11 +51,6 @@ history = autoencoder.fit(x_train, x_train, epochs = 50, batch_size = 256, shuff
 # test set에서 숫자들을 가져왔다는 것을 유의
 encoded_imgs = encoder.predict(x_test)
 decoded_imgs = decoder.predict(encoded_imgs)
-
-print(encoded_imgs)
-print(decoded_imgs)
-print(encoded_imgs.shape)
-print(decoded_imgs.shape)
 
 ################### 이미지 출력 ###################
 # Matplotlib 사용

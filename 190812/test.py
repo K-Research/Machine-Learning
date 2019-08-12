@@ -72,8 +72,8 @@ search = RandomizedSearchCV(estimator = model, param_distributions = hyperparame
 
 search.fit(x_train, x_train)
 
-loss, acc = search.evaluate(x_test, x_test)
-print(loss, acc)
+# loss, acc = search.evaluate(x_test, x_test)
+# print(loss, acc)
 
 print('Best parameter : ', search.best_params_)
 print('Best estimator : ', search.best_estimator_)
