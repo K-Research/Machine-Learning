@@ -25,8 +25,8 @@ def build_network(keep_prob = 0.5, optimizer='adam'):
     # 입력 플레이스홀더
     input_img = Input(shape=(784, ))
 
-    # # "encoded"는 입력의 인코딩된 표현
-    # encoded = Dense(encoding_dim, activation='relu')(input_img)
+    # "encoded"는 입력의 인코딩된 표현
+    encoded = Dense(encoding_dim, activation='relu')(input_img)
 
     # encoded = Dense(64, activation='relu')(encoded) 
     # encoded = Dropout(dr)(encoded)
@@ -36,9 +36,9 @@ def build_network(keep_prob = 0.5, optimizer='adam'):
     # encoded = Dense(16, activation='relu')(encoded)
     # encoded = Dropout(dr)(encoded)
     # encoded = Dense(16, activation='relu')(encoded)
-
     # encoded = Dense(32, activation='relu')(encoded)
-    # decoded = Dense(784, activation='sigmoid')(encoded)
+
+    decoded = Dense(784, activation='sigmoid')(encoded)
 
     # 입력을 입력의 재구성으로 매핑할 모델
     autoencoder = Model(input_img, decoded)
@@ -47,9 +47,11 @@ def build_network(keep_prob = 0.5, optimizer='adam'):
     encoder = Model(input_img, encoded)
 
     # 인코딩된 입력을 위한 플레이스 홀더
-    encoded_input = Input(shape = (encoding_dim, )) # 디코딩의 인풋레이어로 시작
+    encoded_input = Input(shape = (encoding_dim, ))
+    
     # 오토인코더 모델의 마지막 레이어 얻기
     decoder_layer = autoencoder.layers[-1]
+
     # 디코더 모델 생성
     decoder = Model(encoded_input, decoder_layer(encoded_input))
 
