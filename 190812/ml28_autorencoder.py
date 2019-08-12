@@ -61,3 +61,48 @@ print(encoded_imgs)
 print(decoded_imgs)
 print(encoded_imgs.shape) # (10000, 32)
 print(decoded_imgs.shape) # (10000, 784)
+
+################### 이미지 출력 ###################
+# Matplotlib 사용
+import matplotlib.pyplot as plt
+
+n = 10 # 몇 개의 숫자를 나타낼 것인지
+plt.figure(figsize = (20, 4))
+for i in range(n):
+    # 원본 데이터
+    ax = plt.subplot(2, n, i + 1)
+    plt.imshow(x_test[i].reshape(28, 28))
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
+    # 재구성된 데이터
+    ax = plt.subplot(2, n, i + 1 + n)
+    plt.imshow(decoded_imgs[i].reshape(28, 28))
+    plt.gray()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+plt.show()
+
+################### 그래프 출력 ###################
+def plot_loss(history, title = None):
+    # summmarize history for accuracy
+    if not isinstance(history, dict):
+        history = history.history
+
+    plt.plot(history['loss'])
+    plt.plot(history['val_loss'])
+    if title is not None:
+        plt.title(title)
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Training data', 'Validation data'], loc = 0)
+    # plt.show()
+
+plot_acc(history, '(a) 학습 경과에 따른 정확도 변화 추이')
+plt.show()
+plot_loss(history, '(b) 학습 경과에 따른 손실값 변화 추이')
+plt.show()
+
+loss, acc = autoencoder.evaluate(x_test, x_test)
+print(loss, acc)
