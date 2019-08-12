@@ -51,3 +51,13 @@ decoder.summary()
 autoencoder.compile(optimizer = 'adadelta', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
 history = autoencoder.fit(x_train, x_train, epochs = 50, batch_size = 256, shuffle = True, validation_data = (x_test, x_test))
+
+# 숫자들을 인코딩 /디코딩
+# test set에서 숫자들을 가져왔다는 것을 유의
+encoded_imgs = encoder.predict(x_test)
+decoded_imgs = decoder.predict(encoded_imgs)
+
+print(encoded_imgs)
+print(decoded_imgs)
+print(encoded_imgs.shape) # (10000, 32)
+print(decoded_imgs.shape) # (10000, 784)
