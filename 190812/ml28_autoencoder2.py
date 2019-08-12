@@ -38,7 +38,6 @@ i11 = Dense(128)(i10)
 i12 = Dense(64)(i11)
 io = Dense(32)(i12)
 
-
 # "decoded"는 입력의 손실있는 재구성 (lossy reconstruction)
 decoded = Dense(784, activation = 'sigmoid')(encoded)
 # decoded = Dense(784, activation = 'relu)(encoded)

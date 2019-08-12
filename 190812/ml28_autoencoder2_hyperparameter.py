@@ -4,7 +4,6 @@ from keras.callbacks import EarlyStopping
 from keras.datasets import mnist
 from keras.wrappers.scikit_learn import KerasClassifier
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import KFold, RandomizedSearchCV
 
 (x_train, _), (x_test, _) = mnist.load_data()
@@ -152,3 +151,7 @@ plt.show()
 loss, acc = autoencoder.evaluate(x_test, x_test)
 print(loss, acc)
 '''
+
+# Best parameter =  {'optimizer': 'rmsprop', 'keep_prob': 0.020000000000000004, 'epochs': 3, 'batch_size': 10}
+# Best estimator =  <keras.wrappers.scikit_learn.KerasClassifier object at 0x000001A190DD9CF8>
+# Accuracy =  0.9103723221421242
