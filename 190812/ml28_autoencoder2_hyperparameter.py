@@ -22,24 +22,24 @@ from keras.models import Model
 encoding_dim = 32
 dr = 0.1
 
-def build_network(keep_prob = 0.5, optimizer='adam'):
+def build_network(keep_prob = 0.5, optimizer = 'adam'):
     # 입력 플레이스홀더
     input_img = Input(shape=(784, ))
 
     # "encoded"는 입력의 인코딩된 표현
-    encoded = Dense(encoding_dim, activation='relu')(input_img)
+    encoded = Dense(encoding_dim, activation = 'relu')(input_img)
 
-    # encoded = Dense(64, activation='relu')(encoded) 
+    # encoded = Dense(64, activation = 'relu')(encoded) 
     # encoded = Dropout(dr)(encoded)
-    # encoded = Dense(64, activation='relu')(encoded)
+    # encoded = Dense(64, activation = 'relu')(encoded)
     # encoded = Dropout(dr)(encoded)
-    # encoded = Dense(32, activation='relu')(encoded)
-    # encoded = Dense(16, activation='relu')(encoded)
+    # encoded = Dense(32, activation = 'relu')(encoded)
+    # encoded = Dense(16, activation = 'relu')(encoded)
     # encoded = Dropout(dr)(encoded)
-    # encoded = Dense(16, activation='relu')(encoded)
-    # encoded = Dense(32, activation='relu')(encoded)
+    # encoded = Dense(16, activation = 'relu')(encoded)
+    # encoded = Dense(32, activation = 'relu')(encoded)
 
-    decoded = Dense(784, activation='sigmoid')(encoded)
+    decoded = Dense(784, activation = 'sigmoid')(encoded)
 
     # 입력을 입력의 재구성으로 매핑할 모델
     autoencoder = Model(input_img, decoded)
