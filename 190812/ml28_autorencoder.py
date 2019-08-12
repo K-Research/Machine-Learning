@@ -34,3 +34,20 @@ autoencoder = Model(input_img, decoded) # 784 -> 32 -> 784
 
 # 이 모델은 입력을 입력의 인코딩된 입력의 표현으로 매핑
 encoder = Model(input_img, encoded) # 784 -> 32
+
+# 인코딩된 입력을 위한 플레이스 홀더
+encoded_input = Input(shape = (encoding_dim, ))
+
+# 오토인코더 모델의 마지막 레이어 얻기
+decoder_layer = autoencoder.layers[-1]
+
+# 디코더 모델 생성
+decoder = Model(encoded_input, decoder_layer(encoded_input)) # 32 -> 784
+
+autoencoder.summary()
+encoder.summary()
+decoder.summary()
+
+autoencoder.compile(optimizer = 'adadelta', loss = 'binary_crossentropy', metrics = ['accuracy'])
+
+history = autoencoder.fit(x_train, x_train, epochs = 50, batch_size = 256, shuffle = True, validation_data = (x_test, x_test))
