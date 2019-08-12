@@ -1,4 +1,5 @@
 import h5py
+from keras.backend import tensorflow_backend
 from keras.datasets import cifar10
 from keras.layers import Input
 from keras.layers.convolutional import Conv2D, MaxPooling2D
@@ -15,10 +16,9 @@ import pandas as pd
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+import tensorflow
 import warnings
 
-from keras.backend import tensorflow_backend
-import tensorflow
 # config = tensorflow.ConfigProto()
 # config.gpu_options.allow_growth = True
 # tensorflow_backend.set_session(tensorflow.Session(config = config))
