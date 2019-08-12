@@ -20,6 +20,7 @@ from keras.models import Model
 
 # 인코딩될 표현(representation)의 크기
 encoding_dim = 32
+dr = 0.1
 
 def build_network(keep_prob = 0.5, optimizer='adam'):
     # 입력 플레이스홀더
