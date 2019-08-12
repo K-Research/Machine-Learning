@@ -48,7 +48,7 @@ def build_network(keep_prob = 0.5, optimizer='adam'):
 
     # 인코딩된 입력을 위한 플레이스 홀더
     encoded_input = Input(shape = (encoding_dim, ))
-    
+
     # 오토인코더 모델의 마지막 레이어 얻기
     decoder_layer = autoencoder.layers[-1]
 
@@ -56,7 +56,7 @@ def build_network(keep_prob = 0.5, optimizer='adam'):
     decoder = Model(encoded_input, decoder_layer(encoded_input))
 
     autoencoder = Model(inputs=input_img, outputs=decoded)
-    autoencoder.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+    autoencoder.compile(optimizer = 'adadelta', loss = 'binary_crossentropy', metrics = ['accuracy'])
     return autoencoder
 
 def create_hyperparameters():
