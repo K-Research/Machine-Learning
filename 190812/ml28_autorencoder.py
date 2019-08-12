@@ -85,6 +85,20 @@ for i in range(n):
 plt.show()
 
 ################### 그래프 출력 ###################
+def plot_acc(history, title = None):
+    # summmarize history for accuracy
+    if not isinstance(history, dict):
+        history = history.history
+
+    plt.plot(history['acc'])
+    plt.plot(history['val_acc'])
+    if title is not None:
+        plt.title(title)
+    plt.ylabel('Acc')
+    plt.xlabel('Epoch')
+    plt.legend(['Training data', 'Validation data'], loc = 0)
+    # plt.show()
+
 def plot_loss(history, title = None):
     # summmarize history for accuracy
     if not isinstance(history, dict):
