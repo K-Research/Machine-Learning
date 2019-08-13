@@ -23,10 +23,10 @@ encoding_dim = 32
 input_img = Input(shape = (32, 32, 3))
 
 # "encoded"는 입력의 인코딩된 표현
-encoded = Conv2D(3, kernel_size = (32, 32), activation = 'relu', padding = 'same')(input_img)
+encoded = Conv2D(3, kernel_size = (1, 1), activation = 'relu', padding = 'same')(input_img)
 
 # "decoded"는 입력의 손실있는 재구성 (lossy reconstruction)
-decoded = Conv2D(3, kernel_size = (32, 32), activation = 'sigmoid', padding = 'same')(encoded)
+decoded = Conv2D(3, kernel_size = (1, 1), activation = 'sigmoid', padding = 'same')(encoded)
 
 # 입력을 입력의 재구성으로 매핑할 모델
 autoencoder = Model(input_img, decoded)
@@ -110,3 +110,5 @@ plt.show()
 
 loss, acc = autoencoder.evaluate(x_test, x_test)
 print(loss, acc)
+
+# 0.5515817546844483 0.012144303742982447
