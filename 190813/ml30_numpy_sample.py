@@ -19,7 +19,11 @@ numpy.save("boston_sklearn.npy", boston)
 from keras.datasets import cifar10
 
 (X_train_cifar10, y_train_cifar10), (X_test_cifar10, y_test_cifar10) = cifar10.load_data()
-numpy.save("cifar10.npy", [X_train_cifar10, y_train_cifar10, X_test_cifar10, y_test_cifar10])
+# numpy.save("cifar10.npy", [X_train_cifar10, y_train_cifar10, X_test_cifar10, y_test_cifar10])
+cifar10_x = numpy.vstack((numpy.array(X_train_cifar10), numpy.array(X_test_cifar10)))
+cifar10_y = numpy.vstack((numpy.array(y_train_cifar10), numpy.array(y_test_cifar10)))
+numpy.save("cifar10_x.npy", cifar10_x)
+numpy.save("cifar10_y.npy", cifar10_y)
 
 iris_data = pandas.read_csv("C:/Document/Bitcamp/Data/iris.csv", encoding = "UTF-8")
 numpy.save("iris.npy", iris_data)
@@ -30,7 +34,11 @@ numpy.save("iris2.npy", iris_data)
 from keras.datasets import mnist
 
 (X_train_mnist, y_train_mnist), (X_test_mnist, y_test_mnist) = mnist.load_data()
-numpy.save("mnist.npy", [X_train_mnist, y_train_mnist   , X_test_mnist, y_test_mnist])
+# numpy.save("mnist.npy", [X_train_mnist, y_train_mnist, X_test_mnist, y_test_mnist])
+mnist_x = numpy.vstack((numpy.array(X_train_mnist), numpy.array(X_test_mnist)))
+mnist_y = numpy.hstack((numpy.array(y_train_mnist), numpy.array(y_test_mnist)))
+numpy.save("mnist_x.npy", mnist_x)
+numpy.save("mnist_y.npy", mnist_y)
 
 datasets = numpy.loadtxt("C:/Document/Bitcamp/Data/pima-indians-diabetes.csv", delimiter = ",")
 numpy.save("pima-indians-diabetes.npy", datasets)
