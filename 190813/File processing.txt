@@ -3,16 +3,20 @@ model.save('savetest01.h5')
 
 #### 모델 불러오기 ####
 from keras.models import load_model
+
 model = load_model("savetest01.h5")
+
 from keras.layer import Dense
+
 model.add(Dense(1))
 
 #### numpy 저장 .npy ####
 import numpy as np
+
 a = np.arange(10)
 print(a)
 np.save("aaa.npy", a) # 저장
-b = np.load("aaa.npy) # 불러오기
+b = np.load("aaa.npy") # 불러오기
 print(b)
 
 #### pandas를 numpy로 바꾸기 ####
@@ -32,19 +36,24 @@ wine = pd.read_csv(".data/winequality-while.csv", sep = ",", encoding = "UTF-8")
 
 #### 각종 샘플 데이터 셋 ####
 from keras.datasets import mnist
+
 (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
 
 from keras.datasets import cifar10
+
 (X_train, Y_train), (X_test, Y_test) = cifar10.load_data()
 
 from keras.datasets import boston_housing
+
 (X_train, Y_train), (X_test, Y_test) = boston_housing.load_data()
 
 from sklearn.datasets import load_boston
+
 boston = load_boston()
 print(boston.key())		# data, target
 # boston.data : x값, numpy
 # boston.target : y값, numpy
 
 from sklearn.datasets import load_breast_cancer
+
 cancer = load_breast_cancer()
