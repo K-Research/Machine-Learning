@@ -24,13 +24,19 @@ numpy.save("cifar10.npy", [X_train_cifar10, y_train_cifar10, X_test_cifar10, y_t
 iris_data = pandas.read_csv("C:/Document/Bitcamp/Data/iris.csv", encoding = "UTF-8")
 numpy.save("iris.npy", iris_data)
 
+iris2_data = pandas.read_csv("C:/Document/Bitcamp/Data/iris2.csv", encoding = "UTF-8")
+numpy.save("iris2.npy", iris_data)
+
 from keras.datasets import mnist
 
 (X_train_mnist, y_train_mnist), (X_test_mnist, y_test_mnist) = mnist.load_data()
-numpy.save("mnist.npy", [X_train_mnist, y_train_mnist, X_test_mnist, y_test_mnist])
+numpy.save("mnist.npy", [X_train_mnist, y_train_mnist   , X_test_mnist, y_test_mnist])
 
 datasets = numpy.loadtxt("C:/Document/Bitcamp/Data/pima-indians-diabetes.csv", delimiter = ",")
 numpy.save("pima-indians-diabetes.npy", datasets)
+
+tem10y_data = pandas.read_csv("C:/Document/Bitcamp/Data/tem10y.csv", encoding = "UTF-8")
+numpy.save("tem10y.npy", tem10y_data)
 
 wine = pandas.read_csv("C:/Document/Bitcamp/Data/winequality-white.csv", sep = ",", encoding = "UTF-8")
 numpy.save("winequality-white.npy", wine)
