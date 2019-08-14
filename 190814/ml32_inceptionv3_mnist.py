@@ -1,16 +1,16 @@
 from keras import layers, models
-from keras.applications import VGG16
+from keras.applications import InceptionV3
 from keras.datasets import mnist
 from keras.utils import to_categorical
 import numpy
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-x_train = numpy.dstack([x_train] * 12)
-x_test = numpy.dstack([x_test] * 12)
+x_train = numpy.dstack([x_train] * 48)
+x_test = numpy.dstack([x_test] * 48)
 
-x_train = x_train.reshape(x_train.shape[0], 56, 56, 3)
-x_test = x_test.reshape(x_test.shape[0], 56, 56, 3)
+x_train = x_train.reshape(x_train.shape[0], 112, 112, 3)
+x_test = x_test.reshape(x_test.shape[0], 112, 112, 3)
 
 # y_train = numpy.dstack([y_train] * 12)
 # y_test = numpy.dstack([y_test] * 12)
@@ -33,9 +33,7 @@ y_test = to_categorical(y_test)
 # print(y_train.shape)
 # print(y_test.shape)
 
-# conv_base = VGG16(weights = 'imagenet', include_top = False, input_shape = (150, 150, 3))
-conv_base = VGG16(weights = 'imagenet', include_top = False, input_shape = (56, 56, 3))
-# conv_base = VGG16() # 224, 224, 3
+conv_base = InceptionV3(weights = 'imagenet', include_top = False, input_shape = (112, 112, 3))
 
 # conv_base.summary()
 
@@ -48,7 +46,10 @@ model.add(layers.Dense(10, activation = 'sigmoid'))
 # model.summary()
 
 model.compile(optimizer = 'adadelta', loss = 'binary_crossentropy', metrics = ['accuracy'])
-model.fit(x_train, y_train, epochs = 50, batch_size = 256, shuffle = True, validation_data = (x_test, y_test))
+# model.fit(x_train, y_train, epochs = 50, batch_size = 256, shuffle = True, validation_data = (x_test, y_test))
+model.fit(x_train, y_train, epochs = 1, batch_size = 256, shuffle = True, validation_data = (x_test, y_test))
 
 loss, acc = model.evaluate(x_test, y_test)
 print(loss, acc)
+
+# 0.010906125947041437 0.996289997291565

@@ -1,5 +1,5 @@
 from keras import layers, models
-from keras.applications import VGG16
+from keras.applications import ResNet50
 from keras.datasets import mnist
 from keras.utils import to_categorical
 import numpy
@@ -33,9 +33,7 @@ y_test = to_categorical(y_test)
 # print(y_train.shape)
 # print(y_test.shape)
 
-# conv_base = VGG16(weights = 'imagenet', include_top = False, input_shape = (150, 150, 3))
-conv_base = VGG16(weights = 'imagenet', include_top = False, input_shape = (56, 56, 3))
-# conv_base = VGG16() # 224, 224, 3
+conv_base = ResNet50(weights = 'imagenet', include_top = False, input_shape = (56, 56, 3))
 
 # conv_base.summary()
 
@@ -48,7 +46,10 @@ model.add(layers.Dense(10, activation = 'sigmoid'))
 # model.summary()
 
 model.compile(optimizer = 'adadelta', loss = 'binary_crossentropy', metrics = ['accuracy'])
-model.fit(x_train, y_train, epochs = 50, batch_size = 256, shuffle = True, validation_data = (x_test, y_test))
+# model.fit(x_train, y_train, epochs = 50, batch_size = 256, shuffle = True, validation_data = (x_test, y_test))
+model.fit(x_train, y_train, epochs = 1, batch_size = 256, shuffle = True, validation_data = (x_test, y_test))
 
 loss, acc = model.evaluate(x_test, y_test)
 print(loss, acc)
+
+# 0.013551878787652823 0.9957099962234497
