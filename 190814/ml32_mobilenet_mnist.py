@@ -52,4 +52,4 @@ model.fit(x_train, y_train, epochs = 1, batch_size = 256, shuffle = True, valida
 loss, acc = model.evaluate(x_test, y_test)
 print(loss, acc)
 
-# 0.02382765940176323 0.9927899982452393
+# 0.02382765940176323 0.992789998245239
