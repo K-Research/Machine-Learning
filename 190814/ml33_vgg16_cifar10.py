@@ -37,7 +37,7 @@ y_test = to_categorical(y_test)
 conv_base = VGG16(weights = 'imagenet', include_top = False, input_shape = (32, 32, 3))
 # conv_base = VGG16() # 224, 224, 3
 
-conv_base.summary()
+# conv_base.summary()
 
 model = models.Sequential()
 model.add(conv_base)
@@ -45,10 +45,10 @@ model.add(layers.Flatten())
 model.add(layers.Dense(256, activation = 'relu'))
 model.add(layers.Dense(10, activation = 'softmax'))
 
-model.summary()
+# model.summary()
 
 model.compile(optimizer = 'adadelta', loss = 'categorical_crossentropy', metrics = ['accuracy'])
-model.fit(x_train, y_train, epochs = 2, batch_size = 256, shuffle = True, validation_data = (x_test, y_test))
+model.fit(x_train, y_train, epochs = 50, batch_size = 256, shuffle = True, validation_data = (x_test, y_test))
 
 loss, acc = model.evaluate(x_test, y_test)
 print(loss, acc)
